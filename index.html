@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Veloura - інтернет-магазин кондитерської техніки, інгредієнтів та інвентарю для солодких майстрів."
+    />
+    <title>Veloura | Кондитерська техніка та інвентар</title>
+  </head>
+  <body>
+    <div class="min-h-screen bg-white text-veloura-ink">
+      <header class="sticky top-0 z-40 border-b border-veloura-line bg-white/90 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-[1510px] items-center gap-3 px-4 py-3 lg:px-8">
+          <button
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-veloura-line text-veloura-ink lg:hidden"
+            type="button"
+            data-menu-toggle
+            aria-label="Відкрити каталог"
+          >
+            <span class="h-0.5 w-5 bg-current before:block before:h-0.5 before:w-5 before:-translate-y-1.5 before:bg-current after:block after:h-0.5 after:w-5 after:translate-y-1 after:bg-current"></span>
+          </button>
+
+          <a class="logo-mark shrink-0" href="#/" aria-label="Veloura">Veloura</a>
+
+          <a
+            class="hidden items-center gap-2 rounded-md bg-rose-50 px-5 py-3 text-sm font-semibold text-veloura-berry transition hover:bg-rose-100 md:inline-flex"
+            href="#/catalog"
+          >
+            <span>Каталог товарів</span>
+            <span data-icon="chevron-down"></span>
+          </a>
+
+          <label class="relative ml-auto hidden w-full max-w-xl md:block">
+            <span class="sr-only">Пошук товарів</span>
+            <input
+              class="h-11 w-full rounded-md border border-veloura-line bg-white px-5 pr-11 text-sm outline-none transition placeholder:text-slate-400 focus:border-veloura-rose focus:ring-4 focus:ring-rose-100"
+              type="search"
+              placeholder="Пошук товарів..."
+              data-search
+            />
+            <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search"></span>
+          </label>
+
+          <a class="hidden whitespace-nowrap text-sm font-bold text-veloura-ink lg:block" href="tel:0800334455">
+            0 (800) 33 44 55
+          </a>
+
+          <nav class="ml-auto flex items-center gap-1 sm:ml-2" aria-label="Швидкі дії">
+            <button class="icon-button relative" type="button" aria-label="Обране" data-icon-button="heart" data-open-favorites>
+              <span
+                class="absolute -right-1 -top-1 hidden h-5 min-w-5 items-center justify-center rounded-full bg-veloura-lilac px-1 text-[10px] font-bold text-white"
+                data-favorite-count
+              >0</span>
+            </button>
+            <button class="icon-button relative" type="button" aria-label="Кошик" data-icon-button="cart" data-open-cart>
+              <span
+                class="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-veloura-rose px-1 text-[10px] font-bold text-white"
+                data-cart-count
+              >0</span>
+            </button>
+            <a class="icon-button" href="#/profile" aria-label="Профіль" data-icon-button="user"></a>
+          </nav>
+        </div>
+
+        <div class="border-t border-veloura-line px-4 py-3 md:hidden">
+          <label class="relative block">
+            <span class="sr-only">Пошук товарів</span>
+            <input
+              class="h-11 w-full rounded-md border border-veloura-line bg-white px-5 pr-11 text-sm outline-none transition placeholder:text-slate-400 focus:border-veloura-rose focus:ring-4 focus:ring-rose-100"
+              type="search"
+              placeholder="Пошук товарів..."
+              data-search-mobile
+            />
+            <span class="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search"></span>
+          </label>
+        </div>
+      </header>
+
+      <div class="page-frame mx-auto grid max-w-[1510px] gap-6 px-4 py-5 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-8 lg:py-8" data-page-frame>
+        <aside
+          class="catalog-panel fixed inset-y-0 left-0 z-50 w-[292px] -translate-x-full bg-white p-4 transition lg:sticky lg:top-[89px] lg:z-0 lg:h-[calc(100vh-112px)] lg:w-auto lg:translate-x-0 lg:border-r lg:border-veloura-line lg:bg-transparent lg:p-0 lg:pr-4"
+          data-catalog-panel
+        >
+          <div class="mb-5 flex items-center justify-between lg:hidden">
+            <span class="logo-mark">Veloura</span>
+            <button class="icon-button" type="button" data-menu-close aria-label="Закрити каталог"></button>
+          </div>
+          <nav class="space-y-1" id="category-nav" aria-label="Категорії каталогу"></nav>
+        </aside>
+
+        <div class="fixed inset-0 z-40 hidden bg-veloura-ink/35 backdrop-blur-sm lg:hidden" data-menu-backdrop></div>
+
+        <main class="min-w-0" id="app" tabindex="-1"></main>
+      </div>
+    </div>
+
+    <div class="fixed inset-0 z-50 hidden bg-veloura-ink/40 backdrop-blur-sm" data-cart-backdrop></div>
+    <aside
+      class="fixed inset-y-0 right-0 z-[60] flex w-full max-w-[430px] translate-x-full flex-col border-l border-veloura-line bg-white shadow-soft transition duration-300"
+      data-cart-drawer
+      aria-label="Кошик"
+    >
+      <div class="flex items-center justify-between border-b border-veloura-line px-6 py-5">
+        <div>
+          <p class="text-sm font-semibold text-veloura-berry">Ваше замовлення</p>
+          <h2 class="text-2xl font-extrabold text-veloura-ink">Кошик <span data-cart-title-count></span></h2>
+        </div>
+        <button class="icon-button" type="button" data-close-cart aria-label="Закрити кошик"></button>
+      </div>
+      <div class="flex-1 overflow-y-auto px-6 py-5" data-cart-items></div>
+      <div class="border-t border-veloura-line px-6 py-5" data-cart-summary></div>
+    </aside>
+
+    <div
+      class="pointer-events-none fixed bottom-5 left-1/2 z-[70] -translate-x-1/2 translate-y-5 rounded-md bg-veloura-ink px-5 py-3 text-sm font-semibold text-white opacity-0 shadow-soft transition"
+      data-toast
+      role="status"
+      aria-live="polite"
+    ></div>
+
+    <script type="module" src="/src/scripts/main.js"></script>
+  </body>
+</html>
