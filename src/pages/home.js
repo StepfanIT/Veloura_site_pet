@@ -1,41 +1,107 @@
 import { assets, benefits, categories, products } from '../data/shop.js';
 import { benefitCard, categoryCard, productCard } from '../components/cards.js';
 
+const heroSlides = [
+  {
+    eyebrow: 'Veloura collection',
+    title: 'Професійна техніка для ваших солодких шедеврів',
+    text: 'Обирайте міксери, форми, інвентар та інгредієнти для домашньої і професійної кондитерської кухні.',
+    image: assets.heroMixer,
+    imagePosition: '68% center',
+    alt: 'Пастельно-рожевий планетарний міксер із капкейками',
+    primaryLabel: 'Перейти до каталогу',
+    primaryHref: '#/catalog',
+    secondaryLabel: 'Дивитись міксер',
+    secondaryHref: '#/product/veloura-artisan-48'
+  },
+  {
+    eyebrow: 'Новинки сезону',
+    title: 'Форми, декор і насадки для акуратної подачі',
+    text: 'Зберіть робочий набір для капкейків, тортів, макаронс і десертних боксів в одному каталозі.',
+    image: assets.categoryStrip,
+    imagePosition: '58% center',
+    alt: 'Кондитерський інвентар, форми та десерти у пастельній палітрі',
+    primaryLabel: 'Дивитись новинки',
+    primaryHref: '#/catalog?category=new',
+    secondaryLabel: 'Форми для випічки',
+    secondaryHref: '#/catalog?category=molds'
+  },
+  {
+    eyebrow: 'Для майстерні',
+    title: 'Інгредієнти та інвентар для стабільного результату',
+    text: 'Підберіть базу для щоденної роботи: шоколад, борошно, шпателі, мішки та пакування.',
+    image: assets.categoryStrip,
+    imagePosition: '24% center',
+    alt: 'Інгредієнти та кондитерський інвентар для професійної кухні',
+    primaryLabel: 'Обрати інгредієнти',
+    primaryHref: '#/catalog?category=ingredients',
+    secondaryLabel: 'Інвентар',
+    secondaryHref: '#/catalog?category=tools'
+  }
+];
+
 export const homePage = () => {
   const featuredProducts = products.slice(0, 8);
+  const heroMarkup = heroSlides
+    .map(
+      (slide, index) => `
+        <article
+          class="hero-slide absolute inset-0 ${index === 0 ? 'is-active' : ''}"
+          data-hero-slide="${index}"
+          aria-hidden="${index === 0 ? 'false' : 'true'}"
+          ${index === 0 ? '' : 'inert'}
+        >
+          <img
+            class="absolute inset-0 h-full w-full object-cover"
+            src="${slide.image}"
+            style="object-position: ${slide.imagePosition};"
+            alt="${slide.alt}"
+          />
+          <div class="hero-overlay absolute inset-0"></div>
+          <div class="relative z-10 flex min-h-[560px] max-w-xl flex-col justify-center px-6 pb-20 pt-10 sm:min-h-[430px] sm:px-10 lg:min-h-[390px] lg:px-16">
+            <p class="mb-4 text-sm font-bold uppercase text-veloura-berry">${slide.eyebrow}</p>
+            <h1 class="max-w-[540px] text-3xl font-extrabold leading-tight text-veloura-ink sm:text-5xl">
+              ${slide.title}
+            </h1>
+            <p class="mt-5 max-w-md text-base leading-7 text-veloura-muted">
+              ${slide.text}
+            </p>
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                class="inline-flex h-12 items-center justify-center rounded-md bg-veloura-rose px-7 text-sm font-bold text-white shadow-lg shadow-rose-200 transition hover:bg-veloura-berry"
+                href="${slide.primaryHref}"
+              >
+                ${slide.primaryLabel}
+              </a>
+              <a class="inline-flex h-12 items-center justify-center rounded-md px-4 text-sm font-bold text-veloura-ink transition hover:bg-white/70" href="${slide.secondaryHref}">
+                ${slide.secondaryLabel}
+              </a>
+            </div>
+          </div>
+        </article>
+      `
+    )
+    .join('');
 
   return `
-    <section class="hero-shell reveal relative overflow-hidden rounded-lg bg-veloura-blush shadow-soft">
-      <img
-        class="absolute inset-0 h-full w-full object-cover object-center"
-        src="${assets.heroMixer}"
-        alt="Пастельно-рожевий планетарний міксер із капкейками"
-      />
-      <div class="absolute inset-0 bg-gradient-to-r from-white/92 via-white/52 to-white/0"></div>
-      <div class="relative flex min-h-[390px] max-w-xl flex-col justify-center px-6 py-10 sm:px-10 lg:px-16">
-        <p class="mb-4 text-sm font-bold uppercase text-veloura-berry">Veloura collection</p>
-        <h1 class="max-w-[540px] text-4xl font-extrabold leading-tight text-veloura-ink sm:text-5xl">
-          Професійна техніка для ваших солодких шедеврів
-        </h1>
-        <p class="mt-5 max-w-md text-base leading-7 text-veloura-muted">
-          Обирайте міксери, форми, інвентар та інгредієнти для домашньої і професійної кондитерської кухні.
-        </p>
-        <div class="mt-8 flex flex-wrap items-center gap-3">
-          <a
-            class="inline-flex h-12 items-center justify-center rounded-md bg-veloura-rose px-7 text-sm font-bold text-white shadow-lg shadow-rose-200 transition hover:bg-veloura-berry"
-            href="#/catalog"
-          >
-            Перейти до каталогу
-          </a>
-          <a class="inline-flex h-12 items-center justify-center rounded-md px-4 text-sm font-bold text-veloura-ink transition hover:bg-white/70" href="#/product/veloura-artisan-48">
-            Дивитись міксер
-          </a>
-        </div>
-        <div class="mt-10 flex items-center gap-2" aria-label="Слайдер промо">
-          <button class="h-2.5 w-6 rounded-full bg-veloura-lilac" type="button" aria-label="Слайд 1"></button>
-          <button class="h-2.5 w-2.5 rounded-full bg-white/80" type="button" aria-label="Слайд 2"></button>
-          <button class="h-2.5 w-2.5 rounded-full bg-white/80" type="button" aria-label="Слайд 3"></button>
-        </div>
+    <section class="hero-shell reveal relative overflow-hidden rounded-lg bg-veloura-blush shadow-soft" data-hero-carousel>
+      <div class="relative min-h-[560px] sm:min-h-[430px] lg:min-h-[390px]" data-hero-track>
+        ${heroMarkup}
+      </div>
+      <div class="absolute bottom-8 left-6 z-20 flex items-center gap-2 sm:left-10 lg:left-16" aria-label="Слайдер промо">
+        ${heroSlides
+          .map(
+            (_, index) => `
+              <button
+                class="hero-dot ${index === 0 ? 'is-active' : ''}"
+                type="button"
+                data-hero-dot="${index}"
+                aria-label="Слайд ${index + 1}"
+                ${index === 0 ? 'aria-current="true"' : ''}
+              ></button>
+            `
+          )
+          .join('')}
       </div>
     </section>
 

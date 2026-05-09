@@ -56,6 +56,64 @@
     isolation: isolate;
   }
 
+  .hero-slide {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(1.25rem);
+    transition: opacity 520ms ease, transform 680ms ease;
+  }
+
+  .hero-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  .hero-slide img {
+    transition: transform 6200ms ease;
+  }
+
+  .hero-slide.is-active img {
+    transform: scale(1.035);
+  }
+
+  .hero-overlay {
+    background: linear-gradient(90deg, rgb(255 255 255 / 0.9) 0%, rgb(255 255 255 / 0.56) 45%, rgb(255 255 255 / 0.04) 100%);
+  }
+
+  .hero-dot {
+    background: rgb(255 255 255 / 0.86);
+    border-radius: 9999px;
+    box-shadow: 0 4px 14px rgb(80 49 86 / 0.14);
+    height: 0.625rem;
+    overflow: hidden;
+    position: relative;
+    transition: width 220ms ease, transform 220ms ease, background-color 220ms ease;
+    width: 0.625rem;
+  }
+
+  .hero-dot:hover {
+    transform: translateY(-1px);
+  }
+
+  .hero-dot::after {
+    background: theme('colors.veloura.lilac');
+    content: '';
+    inset: 0;
+    position: absolute;
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  .hero-dot.is-active {
+    background: rgb(255 255 255 / 0.72);
+    width: 2.125rem;
+  }
+
+  .hero-dot.is-active::after {
+    animation: hero-dot-progress 5.2s linear forwards;
+  }
+
   .category-thumb {
     aspect-ratio: 1.35 / 1;
     background-image: var(--thumb-image);
@@ -208,21 +266,23 @@
   }
 }
 
+@keyframes hero-dot-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (max-width: 640px) {
   .page-frame {
     gap: 1rem;
   }
 
-  .hero-shell img {
-    object-position: 66% center;
-  }
-
-  .hero-shell::after {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.58) 58%, rgba(255, 255, 255, 0.22));
-    content: '';
-    inset: 0;
-    position: absolute;
-    z-index: 0;
+  .hero-overlay {
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.68) 0%, rgb(255 255 255 / 0.38) 54%, rgb(255 255 255 / 0.12) 100%);
   }
 
   .product-main-image {

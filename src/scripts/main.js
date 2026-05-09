@@ -40,6 +40,10 @@ const state = {
 let toastTimer;
 let observer;
 let pendingRouteOptions = null;
+let heroTimer;
+let heroPointerStart = null;
+
+const HERO_SLIDE_MS = 5200;
 
 const parseRoute = () => {
   const hash = window.location.hash || '#/';
@@ -223,6 +227,65 @@ const hydrateReveal = ({ animate = true } = {}) => {
   targets.forEach((target) => observer.observe(target));
 };
 
+const setHeroSlide = (nextIndex) => {
+  const carousel = document.querySelector('[data-hero-carousel]');
+
+  if (!carousel) {
+    return;
+  }
+
+  const slides = [...carousel.querySelectorAll('[data-hero-slide]')];
+  const dots = [...carousel.querySelectorAll('[data-hero-dot]')];
+  const slideIndex = (nextIndex + slides.length) % slides.length;
+
+  carousel.dataset.activeSlide = String(slideIndex);
+
+  slides.forEach((slide, index) => {
+    const active = index === slideIndex;
+    slide.classList.toggle('is-active', active);
+    slide.setAttribute('aria-hidden', String(!active));
+    slide.toggleAttribute('inert', !active);
+  });
+
+  dots.forEach((dot, index) => {
+    const active = index === slideIndex;
+    dot.classList.toggle('is-active', active);
+
+    if (active) {
+      dot.setAttribute('aria-current', 'true');
+    } else {
+      dot.removeAttribute('aria-current');
+    }
+  });
+};
+
+const stopHeroCarousel = () => {
+  window.clearInterval(heroTimer);
+  heroTimer = null;
+};
+
+const startHeroCarousel = () => {
+  stopHeroCarousel();
+
+  const carousel = document.querySelector('[data-hero-carousel]');
+
+  if (!carousel) {
+    return;
+  }
+
+  const slides = [...carousel.querySelectorAll('[data-hero-slide]')];
+
+  if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  setHeroSlide(Number(carousel.dataset.activeSlide || 0));
+  heroTimer = window.setInterval(() => {
+    const activeSlide = Number(carousel.dataset.activeSlide || 0);
+    setHeroSlide(activeSlide + 1);
+  }, HERO_SLIDE_MS);
+};
+
 const renderRoute = (scroll = true, { animate = true } = {}) => {
   const route = parseRoute();
   const category = route.params.get('category') || 'all';
@@ -249,6 +312,7 @@ const renderRoute = (scroll = true, { animate = true } = {}) => {
   hydrateReveal({ animate });
   syncSearchInputs();
   updateFavoriteButtons();
+  startHeroCarousel();
 
   if (scroll) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -473,6 +537,36 @@ document.addEventListener('keydown', (event) => {
   }
 });
 
+document.addEventListener('pointerdown', (event) => {
+  const carousel = event.target.closest('[data-hero-carousel]');
+
+  if (!carousel) {
+    return;
+  }
+
+  heroPointerStart = event.clientX;
+});
+
+document.addEventListener('pointerup', (event) => {
+  const carousel = event.target.closest('[data-hero-carousel]');
+
+  if (!carousel || heroPointerStart === null) {
+    heroPointerStart = null;
+    return;
+  }
+
+  const delta = event.clientX - heroPointerStart;
+  heroPointerStart = null;
+
+  if (Math.abs(delta) < 42) {
+    return;
+  }
+
+  const activeSlide = Number(carousel.dataset.activeSlide || 0);
+  setHeroSlide(delta < 0 ? activeSlide + 1 : activeSlide - 1);
+  startHeroCarousel();
+});
+
 document.addEventListener('submit', (event) => {
   const form = event.target.closest('[data-auth-form]');
 
@@ -489,6 +583,12 @@ document.addEventListener('click', (event) => {
   const catalogLink = event.target.closest('a[href^="#/catalog"]');
   if (catalogLink && parseRoute().name === 'catalog') {
     pendingRouteOptions = { scroll: false, animate: false };
+  }
+
+  const heroDot = event.target.closest('[data-hero-dot]');
+  if (heroDot) {
+    setHeroSlide(Number(heroDot.dataset.heroDot));
+    startHeroCarousel();
   }
 
   const menuLink = event.target.closest('[data-nav-link]');
