@@ -58,9 +58,9 @@ export const homePage = () => {
             alt="${slide.alt}"
           />
           <div class="hero-overlay absolute inset-0"></div>
-          <div class="relative z-10 flex min-h-[560px] max-w-xl flex-col justify-center px-6 pb-20 pt-10 sm:min-h-[430px] sm:px-10 lg:min-h-[390px] lg:px-16">
+          <div class="relative z-10 flex min-h-[560px] w-full max-w-[22rem] flex-col justify-center px-6 pb-20 pt-10 sm:min-h-[430px] sm:max-w-xl sm:px-10 lg:min-h-[390px] lg:px-16">
             <p class="mb-4 text-sm font-bold uppercase text-veloura-berry">${slide.eyebrow}</p>
-            <h1 class="max-w-[540px] text-3xl font-extrabold leading-tight text-veloura-ink sm:text-5xl">
+            <h1 class="max-w-[18rem] break-words text-3xl font-extrabold leading-tight text-veloura-ink sm:max-w-[540px] sm:text-5xl">
               ${slide.title}
             </h1>
             <p class="mt-5 max-w-md text-base leading-7 text-veloura-muted">
@@ -84,7 +84,7 @@ export const homePage = () => {
     .join('');
 
   return `
-    <section class="hero-shell reveal relative overflow-hidden rounded-lg bg-veloura-blush shadow-soft" data-hero-carousel>
+    <section class="hero-shell relative overflow-hidden rounded-lg bg-veloura-blush shadow-soft" data-hero-carousel>
       <div class="relative min-h-[560px] sm:min-h-[430px] lg:min-h-[390px]" data-hero-track>
         ${heroMarkup}
       </div>
