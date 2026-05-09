@@ -8,6 +8,7 @@ const heroSlides = [
     text: 'Обирайте міксери, форми, інвентар та інгредієнти для домашньої і професійної кондитерської кухні.',
     image: assets.heroMixer,
     imagePosition: '68% center',
+    accent: 'primary',
     alt: 'Пастельно-рожевий планетарний міксер із капкейками',
     primaryLabel: 'Перейти до каталогу',
     primaryHref: '#/catalog',
@@ -20,6 +21,7 @@ const heroSlides = [
     text: 'Зберіть робочий набір для капкейків, тортів, макаронс і десертних боксів в одному каталозі.',
     image: assets.categoryStrip,
     imagePosition: '58% center',
+    accent: 'strip',
     alt: 'Кондитерський інвентар, форми та десерти у пастельній палітрі',
     primaryLabel: 'Дивитись новинки',
     primaryHref: '#/catalog?category=new',
@@ -32,6 +34,7 @@ const heroSlides = [
     text: 'Підберіть базу для щоденної роботи: шоколад, борошно, шпателі, мішки та пакування.',
     image: assets.categoryStrip,
     imagePosition: '24% center',
+    accent: 'strip',
     alt: 'Інгредієнти та кондитерський інвентар для професійної кухні',
     primaryLabel: 'Обрати інгредієнти',
     primaryHref: '#/catalog?category=ingredients',
@@ -48,6 +51,7 @@ export const homePage = () => {
         <article
           class="hero-slide absolute inset-0 ${index === 0 ? 'is-active' : ''}"
           data-hero-slide="${index}"
+          data-hero-accent="${slide.accent}"
           aria-hidden="${index === 0 ? 'false' : 'true'}"
           ${index === 0 ? '' : 'inert'}
         >
@@ -58,7 +62,7 @@ export const homePage = () => {
             alt="${slide.alt}"
           />
           <div class="hero-overlay absolute inset-0"></div>
-          <div class="relative z-10 flex min-h-[560px] w-full max-w-[22rem] flex-col justify-center px-6 pb-20 pt-10 sm:min-h-[430px] sm:max-w-xl sm:px-10 lg:min-h-[390px] lg:px-16">
+          <div class="hero-copy relative z-10 flex min-h-[560px] w-full max-w-[22rem] flex-col justify-center px-6 pb-24 pt-10 sm:min-h-[430px] sm:max-w-xl sm:px-10 sm:pb-24 lg:min-h-[500px] lg:px-16">
             <p class="mb-4 text-sm font-bold uppercase text-veloura-berry">${slide.eyebrow}</p>
             <h1 class="max-w-[18rem] break-words text-3xl font-extrabold leading-tight text-veloura-ink sm:max-w-[540px] sm:text-5xl">
               ${slide.title}
@@ -77,6 +81,21 @@ export const homePage = () => {
                 ${slide.secondaryLabel}
               </a>
             </div>
+            <div class="hero-dots mt-8 flex items-center gap-2" aria-label="Слайдер промо">
+              ${heroSlides
+                .map(
+                  (_, dotIndex) => `
+                    <button
+                      class="hero-dot ${dotIndex === index ? 'is-active' : ''}"
+                      type="button"
+                      data-hero-dot="${dotIndex}"
+                      aria-label="Слайд ${dotIndex + 1}"
+                      ${dotIndex === index ? 'aria-current="true"' : ''}
+                    ></button>
+                  `
+                )
+                .join('')}
+            </div>
           </div>
         </article>
       `
@@ -85,23 +104,8 @@ export const homePage = () => {
 
   return `
     <section class="hero-shell relative overflow-hidden rounded-lg bg-veloura-blush shadow-soft" data-hero-carousel>
-      <div class="relative min-h-[560px] sm:min-h-[430px] lg:min-h-[390px]" data-hero-track>
+      <div class="relative min-h-[560px] sm:min-h-[430px] lg:min-h-[500px]" data-hero-track>
         ${heroMarkup}
-      </div>
-      <div class="absolute bottom-8 left-6 z-20 flex items-center gap-2 sm:left-10 lg:left-16" aria-label="Слайдер промо">
-        ${heroSlides
-          .map(
-            (_, index) => `
-              <button
-                class="hero-dot ${index === 0 ? 'is-active' : ''}"
-                type="button"
-                data-hero-dot="${index}"
-                aria-label="Слайд ${index + 1}"
-                ${index === 0 ? 'aria-current="true"' : ''}
-              ></button>
-            `
-          )
-          .join('')}
       </div>
     </section>
 

@@ -247,8 +247,8 @@ const setHeroSlide = (nextIndex) => {
     slide.toggleAttribute('inert', !active);
   });
 
-  dots.forEach((dot, index) => {
-    const active = index === slideIndex;
+  dots.forEach((dot) => {
+    const active = Number(dot.dataset.heroDot) === slideIndex;
     dot.classList.toggle('is-active', active);
 
     if (active) {
